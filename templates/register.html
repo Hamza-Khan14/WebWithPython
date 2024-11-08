@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameGrove - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>                     
+            <h1 class="site-title text-glitch">
+                <i class="fa-solid fa-gamepad-modern"></i> GameGrove
+            </h1>
+            <nav class="main-nav">
+                <div class="nav-links">
+                    <a href="{{ url_for('home') }}" class="nav-link hover-glow">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('profile') }}" class="nav-link hover-glow">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="nav-link hover-glow">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link hover-glow">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="{{ url_for('register') }}" class="nav-link hover-glow">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h2><i class="fa-solid fa-gamepad-modern"></i> GameGrove</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link hover-glow">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('profile') }}" class="nav-link hover-glow">
+                        <i class="fas fa-user"></i> Profile
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="nav-link hover-glow">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link hover-glow">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{{ url_for('register') }}" class="nav-link hover-glow">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <i class="fa-solid fa-microchip"></i> 2024 GameGrove
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="auth-section">
+            <div class="container">
+                <div class="auth-card border-animate">
+                    <h2 class="text-glitch">
+                        <i class="fa-solid fa-user-gear"></i> Create Account
+                    </h2>
+                    <form method="POST" class="auth-form">
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fa-solid fa-signature"></i> Username
+                            </label>
+                            <input type="text" id="username" name="username" required class="form-input hover-glow">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fa-solid fa-envelope-circle-check"></i> Email
+                            </label>
+                            <input type="email" id="email" name="email" required class="form-input hover-glow">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fa-solid fa-shield-keyhole"></i> Password
+                            </label>
+                            <input type="password" 
+                                   id="password" 
+                                   name="password" 
+                                   required 
+                                   class="form-input hover-glow" 
+                                   autocomplete="new-password">
+                        </div>
+                        <button type="submit" class="submit-button hover-glow">
+                            <i class="fa-solid fa-rocket"></i> Launch Into GameGrove
+                        </button>
+                    </form>
+                    <div class="auth-links">
+                        <p>
+                            <i class="fa-solid fa-circle-user"></i> Already a member? 
+                            <a href="{{ url_for('login') }}" class="hover-glow">
+                                <i class="fa-solid fa-portal-enter"></i> Login Here
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>
+                    <i class="fa-solid fa-microchip"></i> 2024 GameGrove. All rights reserved.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-twitter-x"></i> Twitter
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-discord"></i> Discord
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+    
+        document.addEventListener('click', (event) => {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+            
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

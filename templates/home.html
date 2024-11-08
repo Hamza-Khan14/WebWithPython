@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameGrove - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>
+            <h1 class="site-title text-glitch">
+                <i class="fa-solid fa-gamepad-modern"></i> GameGrove
+            </h1>
+            <nav class="main-nav">
+                <div class="nav-links">
+                    <a href="{{ url_for('home') }}" class="nav-link hover-glow">
+                        <i class="fa-solid fa-house-user"></i> Home
+                    </a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('profile') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-user-astronaut"></i> Profile
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-power-off"></i> Logout
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-right-to-bracket"></i> Login
+                        </a>
+                        <a href="{{ url_for('register') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-user-plus"></i> Register
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h2><i class="fa-solid fa-gamepad-modern"></i> GameGrove</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fa-solid fa-house-user"></i> Home
+                </a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('profile') }}" class="nav-link">
+                        <i class="fa-solid fa-user-astronaut"></i> Profile
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="nav-link">
+                        <i class="fa-solid fa-power-off"></i> Logout
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </a>
+                    <a href="{{ url_for('register') }}" class="nav-link">
+                        <i class="fa-solid fa-user-plus"></i> Register
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <i class="fa-regular fa-copyright"></i> 2024 GameGrove
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h2 class="text-glitch">Welcome to GameGrove</h2>
+                <p class="hero-text">
+                    <i class="fa-solid fa-star"></i> Discover your next gaming adventure
+                </p>
+            </div>
+        </section>
+
+        <section class="filter-section">
+            <div class="container">
+                <form class="filter-form" method="GET">
+                    <div class="search-group">
+                        <input type="text" 
+                               name="search" 
+                               placeholder="Search games..." 
+                               value="{{ search }}"
+                               class="form-input hover-glow">
+                        <button type="submit" class="search-button hover-glow">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <select name="genre" class="form-input hover-glow" onchange="this.form.submit()">
+                            <option value="">All Genres</option>
+                            {% for genre in genres %}
+                                <option value="{{ genre[0] }}" {% if genre[0] == current_genre %}selected{% endif %}>
+                                    {{ genre[0] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        
+                        <select name="sort" class="form-input hover-glow" onchange="this.form.submit()">
+                            <option value="rating" {% if sort == 'rating' %}selected{% endif %}>Top Rated</option>
+                            <option value="title" {% if sort == 'title' %}selected{% endif %}>A-Z</option>
+                            <option value="release" {% if sort == 'release' %}selected{% endif %}>Latest</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="games-section">
+            <div class="container">
+                <div class="games-list">
+                    {% for game in games %}
+                    <div class="game-card">
+                        <div class="game-content">
+                            <h2 class="game-title text-glitch">
+                                <i class="fa-solid fa-gamepad-modern"></i> {{ game.title }}
+                            </h2>
+                            <p class="game-description">{{ game.description }}</p>
+                            <div class="game-meta">
+                                <div class="game-info">
+                                    <span class="badge">
+                                        <i class="fa-solid fa-tag"></i> {{ game.genre }}
+                                    </span>
+                                    <span class="badge">
+                                        <i class="fa-solid fa-calendar"></i> 
+                                        {{ game.release_date.strftime('%Y') if game.release_date }}
+                                    </span>
+                                </div>
+                                <div class="rating">
+                                    <div class="progress-bar">
+                                        <div class="progress-bar-fill" style="width: {{ '%.0f' % (game.rating * 20) }}%"></div>
+                                    </div>
+                                    <span class="rating-text">
+                                        <i class="fa-solid fa-star"></i> {{ game.rating }}/5
+                                    </span>
+                                </div>
+                            </div>
+                            {% if current_user.is_authenticated %}
+                            <div class="game-actions">
+                                <button class="action-btn add-to-list hover-glow" data-game-id="{{ game.id }}">
+                                    <i class="fa-solid fa-plus"></i> Add to List
+                                </button>
+                                <button class="action-btn toggle-favorite hover-glow" data-game-id="{{ game.id }}">
+                                    <i class="fa-{% if game in current_user.favorites %}solid{% else %}regular{% endif %} fa-heart"></i>
+                                </button>
+                            </div>
+                            {% endif %}
+                            <a href="{{ url_for('game_detail', game_id=game.id) }}" class="game-link hover-glow">
+                                <i class="fa-solid fa-circle-info"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p><i class="fa-regular fa-copyright"></i> 2024 GameGrove. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-twitter-x"></i> Twitter
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-discord"></i> Discord
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sidebar Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+    
+        document.addEventListener('click', (event) => {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+            
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Game Actions
+        document.querySelectorAll('.toggle-favorite').forEach(button => {
+            button.addEventListener('click', async () => {
+                const gameId = button.dataset.gameId;
+                const response = await fetch(`/toggle_favorite/${gameId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                const icon = button.querySelector('i');
+                icon.classList.toggle('fas');
+                icon.classList.toggle('far');
+            });
+        });
+
+        // Add to List Dropdown
+        document.querySelectorAll('.add-to-list').forEach(button => {
+            button.addEventListener('click', async () => {
+                const gameId = button.dataset.gameId;
+                const lists = ['playing', 'completed', 'wishlist'];
+                const listType = prompt('Choose a list: playing, completed, or wishlist');
+                
+                if (lists.includes(listType)) {
+                    const response = await fetch(`/add_to_list/${gameId}/${listType}`, {
+                        method: 'POST'
+                    });
+                    const data = await response.json();
+                    alert(data.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameGrove - {{ current_user.username }}'s Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>
+            <h1 class="site-title text-glitch">
+                <i class="fa-solid fa-gamepad-modern"></i> GameGrove
+            </h1>
+            <nav class="main-nav">
+                <div class="nav-links">
+                    <a href="{{ url_for('home') }}" class="nav-link hover-glow">
+                        <i class="fa-solid fa-house-user"></i> Home
+                    </a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('profile') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-user-astronaut"></i> Profile
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-power-off"></i> Logout
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-right-to-bracket"></i> Login
+                        </a>
+                        <a href="{{ url_for('register') }}" class="nav-link hover-glow">
+                            <i class="fa-solid fa-user-plus"></i> Register
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h2><i class="fa-solid fa-gamepad-modern"></i> GameGrove</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fa-solid fa-house-user"></i> Home
+                </a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('profile') }}" class="nav-link">
+                        <i class="fa-solid fa-user-astronaut"></i> Profile
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="nav-link">
+                        <i class="fa-solid fa-power-off"></i> Logout
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </a>
+                    <a href="{{ url_for('register') }}" class="nav-link">
+                        <i class="fa-solid fa-user-plus"></i> Register
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <i class="fa-regular fa-copyright"></i> 2024 GameGrove
+        </div>
+    </div>
+    
+    <main class="main-content">
+        <section class="profile-section">
+            <div class="container">
+                <!-- User Info Card -->
+                <div class="profile-card border-animate">
+                    <h2 class="text-glitch">
+                        <i class="fa-solid fa-user-shield"></i> {{ current_user.username }}'s Profile
+                    </h2>
+                    <div class="profile-info">
+                        <div class="info-group">
+                            <span class="label"><i class="fa-solid fa-envelope-open-text"></i> Email:</span>
+                            <span class="value">{{ current_user.email }}</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="label"><i class="fa-solid fa-calendar-days"></i> Member Since:</span>
+                            <span class="value">{{ current_user.created_at.strftime('%B %d, %Y') }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Lists Section -->
+                <div class="game-lists-section">
+                    <h3 class="text-glitch">
+                        <i class="fa-solid fa-list-check"></i> My Game Lists
+                    </h3>
+                    <div class="lists-container">
+                        {% for list in game_lists %}
+                        <div class="game-list-card hover-scale border-animate">
+                            <h4>{{ list.name }}</h4>
+                            <div class="game-count">
+                                <i class="fa-solid fa-gamepad"></i> {{ list.games|length }} games
+                            </div>
+                            <div class="game-preview">
+                                {% for game in list.games[:3] %}
+                                <div class="preview-item">{{ game.title }}</div>
+                                {% endfor %}
+                            </div>
+                            <a href="{{ url_for('view_list', list_id=list.id) }}" class="view-list-btn hover-glow">
+                                <i class="fa-solid fa-eye"></i> View Full List
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Playtime Stats -->
+                <div class="playtime-section">
+                    <h3 class="text-glitch">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Gaming Stats
+                    </h3>
+                    <div class="stats-grid">
+                        {% for record in playtime_records %}
+                        <div class="stat-card hover-scale border-animate">
+                            <h4>{{ record.game.title }}</h4>
+                            <div class="playtime">
+                                <i class="fa-solid fa-hourglass"></i>
+                                {{ (record.minutes_played / 60)|round(1) }} hours
+                            </div>
+                            <div class="last-played">
+                                Last played: {{ record.last_played.strftime('%Y-%m-%d') }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Achievements Section -->
+                <div class="achievements-section">
+                    <h3 class="text-glitch">
+                        <i class="fa-solid fa-trophy"></i> Achievements
+                    </h3>
+                    <div class="achievements-grid">
+                        {% for achievement in current_user.achievements %}
+                        <div class="achievement-card hover-scale border-animate">
+                            <div class="achievement-icon">
+                                <i class="fa-solid fa-medal"></i>
+                            </div>
+                            <div class="achievement-info">
+                                <h4>{{ achievement.name }}</h4>
+                                <p>{{ achievement.description }}</p>
+                                <span class="game-name">{{ achievement.game.title }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Activity Feed -->
+                <div class="activity-feed-section">
+                    <h3 class="text-glitch">
+                        <i class="fa-solid fa-stream"></i> Recent Activity
+                    </h3>
+                    <div class="activity-list">
+                        {% for activity in activities %}
+                        <div class="activity-card hover-scale border-animate">
+                            <div class="activity-icon">
+                                {% if 'review' in activity.activity_type %}
+                                    <i class="fa-solid fa-comment"></i>
+                                {% elif 'achievement' in activity.activity_type %}
+                                    <i class="fa-solid fa-trophy"></i>
+                                {% elif 'favorite' in activity.activity_type %}
+                                    <i class="fa-solid fa-heart"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-gamepad"></i>
+                                {% endif %}
+                            </div>
+                            <div class="activity-content">
+                                <p>{{ activity.content }}</p>
+                                <span class="activity-time">
+                                    {{ activity.created_at.strftime('%Y-%m-%d %H:%M') }}
+                                </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="reviews-section">
+                    <h3 class="text-glitch">
+                        <i class="fa-solid fa-message-captions"></i> Your Reviews
+                    </h3>
+                    <div class="reviews-list">
+                        {% for review in reviews %}
+                        <div class="review-card hover-scale border-animate">
+                            <div class="review-header">
+                                <h4><i class="fa-solid fa-gamepad-modern"></i> {{ review.game.title }}</h4>
+                                <span class="badge">
+                                    <i class="fa-solid fa-stars"></i> {{ review.rating }}/5
+                                </span>
+                            </div>
+                            <p class="review-content">{{ review.content }}</p>
+                            <span class="review-date">
+                                <i class="fa-solid fa-clock-rotate-left"></i> 
+                                {{ review.created_at.strftime('%B %d, %Y') }}
+                            </span>
+                            <a href="{{ url_for('game_detail', game_id=review.game.id) }}" 
+                               class="game-link hover-glow">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> View Game
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p><i class="fa-regular fa-copyright"></i> 2024 GameGrove. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-twitter"></i> Twitter
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-discord"></i> Discord
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+    
+        document.addEventListener('click', (event) => {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+            
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                sidebar.classList.remove('active');
+            }
+        });
+    </script></body>
+</html>

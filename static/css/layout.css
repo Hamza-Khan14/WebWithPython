@@ -1,0 +1,156 @@
+/* Core Layout */
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header */
+.site-header {
+    background: var(--dark-surface);
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--neon-primary);
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-title {
+    font-size: 3rem;
+    margin: 0;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 200px);
+    padding: 4rem 0;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 6rem 0;
+    background: linear-gradient(
+        to bottom,
+        var(--dark-base),
+        var(--dark-surface)
+    );
+}
+
+/* Games Grid */
+.games-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+/* Game Detail Layout */
+.game-detail-section {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Auth Pages Layout */
+.auth-section {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+/* Profile Layout */
+.profile-section {
+    display: grid;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Reviews Layout */
+.reviews-section {
+    max-width: 800px;
+    margin: 4rem auto;
+}
+
+.reviews-list {
+    display: grid;
+    gap: 2rem;
+}
+
+/* Footer */
+.site-footer {
+    background: var(--dark-surface);
+    padding: 3rem 0;
+    margin-top: auto;
+    border-top: 1px solid var(--neon-primary);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.social-links {
+    display: flex;
+    gap: 2rem;
+}
+
+/* Grid Layouts */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid var(--glass-effect);
+}
+
+th {
+    background: rgba(0, 255, 242, 0.1);
+    color: var(--neon-primary);
+}

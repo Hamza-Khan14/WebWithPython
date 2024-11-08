@@ -1,0 +1,187 @@
+/* Font Families */
+body {
+    font-family: 'Space Grotesk', 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+code, pre {
+    font-family: 'Fira Code', monospace;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.2;
+    margin: 1.5rem 0;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 3.5rem;
+    background: var(--cyber-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(255, 45, 85, 0.3);
+}
+
+h3 {
+    font-size: 2rem;
+    color: var(--secondary);
+}
+
+h4 {
+    font-size: 1.75rem;
+    color: var(--accent);
+}
+
+h5 {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+h6 {
+    font-size: 1.25rem;
+    color: var(--secondary);
+}
+
+/* Text Elements */
+p {
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+em {
+    color: var(--secondary);
+    font-style: italic;
+}
+
+/* Lists */
+ul, ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid var(--primary);
+    margin: 1.5rem 0;
+    padding: 1rem 2rem;
+    background: rgba(255, 45, 85, 0.05);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+}
+
+/* Code */
+code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--highlight);
+}
+
+pre {
+    background: var(--dark-surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid var(--glass-effect);
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* Special Text Classes */
+.text-glitch {
+    position: relative;
+    text-shadow: 0 0 10px var(--primary);
+}
+
+.text-gradient {
+    background: var(--cyber-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-neon {
+    color: var(--primary);
+    text-shadow: 0 0 8px var(--primary);
+}
+
+.text-cyber {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Small Text */
+small, .text-small {
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+/* Links in Text */
+p a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+p a:hover {
+    border-bottom-color: var(--primary);
+    text-shadow: 0 0 8px var(--primary);
+}
+
+/* Text Alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Text Transform */
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+/* Font Weights */
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+/* Line Heights */
+.leading-none { line-height: 1; }
+.leading-tight { line-height: 1.25; }
+.leading-normal { line-height: 1.5; }
+.leading-loose { line-height: 2; }
+
+/* Letter Spacing */
+.tracking-tight { letter-spacing: -0.05em; }
+.tracking-normal { letter-spacing: 0; }
+.tracking-wide { letter-spacing: 0.05em; }

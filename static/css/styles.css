@@ -1,0 +1,411 @@
+/* Ultra Modern Gaming Theme 2024 */
+:root {
+    --neon-primary: #00fff2;
+    --neon-secondary: #ff00d4;
+    --cyber-accent: #ffee00;
+    --dark-base: #0a0a0f;
+    --dark-surface: #16161e;
+    --glass-effect: rgba(255, 255, 255, 0.05);
+    --cyber-gradient: linear-gradient(135deg, var(--neon-primary), var(--neon-secondary));
+}
+
+/* Core Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--dark-base);
+    color: #ffffff;
+    font-family: 'Space Grotesk', 'Poppins', sans-serif;
+    min-height: 100vh;
+    background-image: 
+    radial-gradient(circle at 50% 0%, rgba(0, 255, 242, 0.1), transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(255, 0, 212, 0.1), transparent 50%);
+}
+
+/* Header Styles */
+header {
+    background: var(--dark-surface);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--neon-primary);
+}
+
+header h1 {
+    font-size: 3rem;
+    background: var(--cyber-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+/* Navigation Bar */
+nav {
+    background: rgba(22, 22, 30, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1001;
+    pointer-events: auto;
+}
+
+nav a:hover {
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 15px var(--neon-primary);
+    text-shadow: 0 0 5px var(--neon-primary);
+}
+
+/* Main Content Area */
+main {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Game Cards Grid */
+.games-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.game-card {
+    background: var(--dark-surface);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--glass-effect);
+}
+
+.game-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: var(--cyber-gradient);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.game-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* Game Details Section */
+.game-details {
+    background: var(--dark-surface);
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 3rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-effect);
+}
+
+.game-details h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--neon-primary);
+}
+
+.game-card {
+    position: relative;
+    z-index: 1;
+}
+
+.game-card a {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: var(--cyber-gradient);
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.game-card a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--neon-primary);
+}
+
+.game-details a {
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.game-details p {
+    margin: 1rem 0;
+    line-height: 1.6;
+}
+
+/* Reviews Section */
+.reviews {
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+.reviews h2 {
+    color: var(--neon-secondary);
+    margin-bottom: 2rem;
+}
+
+.review {
+    background: rgba(22, 22, 30, 0.6);
+    border-left: 4px solid var(--neon-secondary);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 12px 12px 0;
+    backdrop-filter: blur(10px);
+}
+
+/* Links and Anchors */
+a {
+    color: var(--neon-primary);
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--neon-secondary);
+    text-shadow: 0 0 8px var(--neon-primary);
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: var(--cyber-gradient);
+    transition: width 0.3s ease;
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.2;
+    margin: 1.5rem 0;
+}
+
+h1 {
+    font-size: 3.5rem;
+    background: var(--cyber-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    color: var(--neon-primary);
+    text-shadow: 0 0 10px rgba(0, 255, 242, 0.3);
+}
+
+h3 {
+    font-size: 2rem;
+    color: var(--neon-secondary);
+}
+
+h4 {
+    font-size: 1.75rem;
+    color: var(--cyber-accent);
+}
+
+/* Text Elements */
+p {
+    line-height: 1.8;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+}
+
+strong {
+    color: var(--neon-primary);
+    font-weight: 600;
+}
+
+em {
+    color: var(--neon-secondary);
+    font-style: italic;
+}
+
+/* Lists */
+ul, ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid var(--neon-primary);
+    margin: 1.5rem 0;
+    padding: 1rem 2rem;
+    background: rgba(0, 255, 242, 0.05);
+    border-radius: 0 8px 8px 0;
+}
+
+/* Code Blocks */
+code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    color: var(--cyber-accent);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: var(--dark-surface);
+}
+
+th, td {
+    padding: 1rem;
+    border: 1px solid var(--glass-effect);
+    text-align: left;
+}
+
+th {
+    background: rgba(0, 255, 242, 0.1);
+    color: var(--neon-primary);
+}
+
+/* Selection */
+::selection {
+    background: var(--neon-primary);
+    color: var(--dark-base);
+}
+
+/* Forms Styling */
+form {
+    background: var(--dark-surface);
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-effect);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--neon-primary);
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-effect);
+    border-radius: 8px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 15px rgba(0, 255, 242, 0.3);
+    outline: none;
+}
+
+/* Buttons */
+button {
+    background: var(--cyber-gradient);
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+button:hover {
+    box-shadow: 0 0 20px var(--neon-primary);
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    background: var(--dark-surface);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+    border-top: 1px solid var(--neon-primary);
+}
+
+/* Animations */
+@keyframes neonPulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+.game-card h2 {
+    animation: neonPulse 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .games-list {
+        grid-template-columns: 1fr;
+    }
+    
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .game-details {
+        padding: 1.5rem;
+    }
+}

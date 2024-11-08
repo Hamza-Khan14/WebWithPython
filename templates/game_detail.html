@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameGrove - {{ game.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <h1 class="site-title text-glitch">
+                <i class="fas fa-gamepad"></i> GameGrove
+            </h1>
+            <nav class="main-nav">
+                <div class="nav-links">
+                    <a href="{{ url_for('home') }}" class="nav-link hover-glow">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('profile') }}" class="nav-link hover-glow">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="nav-link hover-glow">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link hover-glow">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="{{ url_for('register') }}" class="nav-link hover-glow">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h2><i class="fas fa-gamepad"></i> GameGrove</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('profile') }}" class="nav-link">
+                        <i class="fas fa-user"></i> Profile
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{{ url_for('register') }}" class="nav-link">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <i class="far fa-copyright"></i> 2024 GameGrove
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="game-detail-section">
+            <div class="container">
+                <div class="game-detail-card border-animate">
+                    <h2 class="game-title text-glitch">
+                        <i class="fas fa-gamepad"></i> {{ game.title }}
+                    </h2>
+                    <div class="game-info">
+                        <div class="game-meta">
+                            <span class="badge">
+                                <i class="fas fa-tags"></i> {{ game.genre }}
+                            </span>
+                            <div class="rating">
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: {{ '%.0f' % (game.rating * 20) }}%"></div>
+                                </div>
+                                <span class="rating-text">
+                                    <i class="fas fa-star"></i> {{ game.rating }}/5
+                                </span>
+                            </div>
+                        </div>
+                        <div class="game-details">
+                            <p class="game-description">
+                                <i class="fas fa-quote-left"></i> {{ game.description }}
+                            </p>
+                            <div class="game-specs">
+                                <p><i class="fas fa-code-branch"></i> <strong>Developer:</strong> {{ game.developer }}</p>
+                                <p><i class="fas fa-building"></i> <strong>Publisher:</strong> {{ game.publisher }}</p>
+                                <p><i class="fas fa-calendar-alt"></i> <strong>Release Date:</strong> 
+                                    {% if game.release_date %}
+                                        {{ game.release_date.strftime('%B %d, %Y') }}
+                                    {% else %}
+                                        TBA
+                                    {% endif %}
+                                </p>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-section">
+                    <h3 class="text-glitch">
+                        <i class="fas fa-comments"></i> Reviews
+                    </h3>
+                    {% if current_user.is_authenticated %}
+                        <div class="review-form-container border-animate">
+                            <h4><i class="fas fa-pen"></i> Add Your Review</h4>
+                            <form method="POST" action="{{ url_for('add_review', game_id=game.id) }}" class="review-form">
+                                <div class="form-group">
+                                    <label for="content">
+                                        <i class="fas fa-comment"></i> Your Review
+                                    </label>
+                                    <textarea id="content" name="content" required class="form-input hover-glow"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rating">
+                                        <i class="fas fa-star"></i> Rating
+                                    </label>
+                                    <select id="rating" name="rating" required class="form-input hover-glow">
+                                        <option value="5">★★★★★ 5 Stars</option>
+                                        <option value="4">★★★★☆ 4 Stars</option>
+                                        <option value="3">★★★☆☆ 3 Stars</option>
+                                        <option value="2">★★☆☆☆ 2 Stars</option>
+                                        <option value="1">★☆☆☆☆ 1 Star</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="submit-button hover-glow">
+                                    <i class="fas fa-paper-plane"></i> Submit Review
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    <div class="reviews-list">
+                        {% for review in reviews %}
+                            <div class="review-card hover-scale border-animate">
+                                <div class="review-header">
+                                    <span class="badge">
+                                        <i class="fas fa-star"></i> {{ review.rating }}/5
+                                    </span>
+                                    <span class="review-author">
+                                        <i class="fas fa-user"></i> {{ review.user.username }}
+                                    </span>
+                                    <span class="review-date">
+                                        <i class="fas fa-clock"></i> {{ review.created_at.strftime('%B %d, %Y') }}
+                                    </span>
+                                </div>
+                                <p class="review-content">{{ review.content }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p><i class="far fa-copyright"></i> 2024 GameGrove. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                    <a href="#" class="social-link hover-glow">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            sidebar.classList.toggle('active');
+        });
+    
+        document.addEventListener('click', (event) => {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+            
+            if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
